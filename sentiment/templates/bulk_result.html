@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .result-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      overflow: hidden; 
+      display: flex;
+      flex-wrap: wrap; 
+      gap: 20px; 
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #102b47;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .summary, .chart {
+      width: calc(50% - 10px); 
+      box-sizing: border-box; 
+    }
+
+    .chart img {
+      max-width: 100%; 
+      height: auto;
+    }
+
+  </style>
+
+  <h2>Bulk Upload Results</h2>
+
+  <div class="result-container">
+    <!-- Display the summary -->
+    <div class="summary">
+      <h3>Summary:</h3>
+      <p>Total Reviews: {{ summary.total_reviews }}</p>
+      <p>Positive Reviews: {{ summary.positive_reviews }} ({{ summary.positive_percentage }}%)</p>
+      <p>Negative Reviews: {{ summary.negative_reviews }} ({{ summary.negative_percentage }}%)</p>
+      <p>Neutral Reviews: {{ summary.neutral_reviews }} ({{ summary.neutral_percentage }}%)</p>
+      <p>Majority Sentiment: {{ summary.majority_sentiment }}</p>
+    </div>
+
+    <!-- Display the chart -->
+    <div class="chart">
+      <img src="data:image/png;base64,{{ chart }}" alt="Sentiment Distribution" />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Review Text</th>
+        <th>Sentiment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+        <tr>
+          <td>{{ result.review_text }}</td>
+          <td>{{ result.sentiment }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

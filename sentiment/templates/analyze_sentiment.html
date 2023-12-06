@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<style>
+    .form-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .analyze-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input, button, select {
+      margin-bottom: 16px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #102b47;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 3px;
+    }
+
+    button:hover {
+      background-color:  #fff;
+      color: #102b47;
+      outline: solid 1px #102b47;
+      font-weight: bolder;
+    }
+  </style>
+  <div class="form-container">
+    <h2>Analyze your review</h2>
+    <form method="post" action="{% url 'analyze_sentiment' %}" class="analyze-form">
+      {% csrf_token %}
+      <label for="{{ form.review_text.id_for_label }}">Test with your own text:</label>
+      {{ form.review_text }}
+      <br/>
+      <button type="submit" class="btn-analyze">Analyze</button>
+    </form>
+<h4>OR</h4>
+    <form method="post" enctype="multipart/form-data" action="{% url 'bulk_upload' %}" class="analyze-form">
+      {% csrf_token %}
+      <label for="{{ form.csv_file.id_for_label }}">Upload a CSV file:</label>
+      {{ form_bulk.csv_file }}
+      <button type="submit" class="btn-analyze">Analyze</button>
+    </form>
+  </div>
+{% endblock %}
