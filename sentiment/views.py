@@ -1,14 +1,16 @@
-import pandas as pd
-from django.shortcuts import render, redirect
-from .models import SentimentAnalysis
-from .forms import SentimentAnalysisForm, BulkUploadForm
-from transformers import pipeline
 import csv
+import base64
+import pandas as pd
+from io import BytesIO
+import matplotlib.pyplot as plt
+from transformers import pipeline
+
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import matplotlib.pyplot as plt
-from io import BytesIO
-import base64
+
+from .models import SentimentAnalysis
+from .forms import SentimentAnalysisForm, BulkUploadForm
 
 def perform_sentiment_analysis(review_text):
     classifier = pipeline('sentiment-analysis',model="nlptown/bert-base-multilingual-uncased-sentiment")
