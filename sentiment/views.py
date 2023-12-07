@@ -32,6 +32,7 @@ def perform_sentiment_analysis(review_text):
 
 def calculate_sentiment_summary(results):
     sentiments = [result.sentiment for result in results]
+    print(sentiments)
 
     total_reviews = len(sentiments)
     positive_reviews = sentiments.count('POSITIVE')
@@ -92,7 +93,7 @@ def bulk_upload(request):
                 sentiment = perform_sentiment_analysis(review_text)
                 result = SentimentAnalysis.objects.create(
                     review_text=review_text,
-                    sentiment=sentiment
+                    sentiment=sentiment[0]
                 )
                 analysis_results.append(result)
 
